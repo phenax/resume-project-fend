@@ -1,13 +1,15 @@
 
-var models= [
-	window.bio, 
-	window.education, 
-	window.work, 
-	window.projects
-];
+window.$(document).ready(function() {
 
-var resume= window.ResumeBuilder(models);
+	var models= [
+		window.bio, 
+		window.education, 
+		window.work, 
+		window.projects
+	];
 
-document.addEventListener('DOMContentLoaded', function() {
-	resume.render();
+	var resume= window.ResumeBuilder(models);
+
+	resume.render();	
+
 });
