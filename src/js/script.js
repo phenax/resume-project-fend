@@ -9,17 +9,24 @@ window.$(document).ready(function() {
 	];
 
 	var resume= window.ResumeBuilder(models);
-
 	resume.render();
 
 
-	var maps= window.GoogleMaps({lat: 40.836852, lng: -73.832632}, 10);
+	var $map= window.$('#myMap');
+	var coordinates= [
+		{ lat: 40.836852, lng: -73.832632 },
+		{ lat: 40.736852, lng: -73.822632 },
+		{ lat: 40.688969, lng: -73.940735 },
+		{ lat: 40.936852, lng: -73.876632 }
+	];
 
-	maps
-		.init()
-		.ready(function() {			
-			maps.addMarker({lat: 40.736852, lng: -73.822632})
-				.addMarker({lat: 40.688969, lng: -73.940735})
-				.addMarker({lat: 40.936852, lng: -73.876632});
+	var maps= window.GoogleMaps(coordinates[0], 10, $map.get(0));
+
+	maps.init()
+		.ready(function() {
+			coordinates
+				.forEach(function(coord) {
+					maps.addMarker(coord);
+				});
 		});
 });

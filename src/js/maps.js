@@ -1,9 +1,13 @@
 
 (function(win) {
 
-	window.initializeMap= function() {};
-
-	win.GoogleMaps= function(center, zoom) {
+	/**
+	 * Google maps api wrapper
+	 * 
+	 * @param {Object} center  The coordinates of the center
+	 * @param {Number} zoom    The amount of zoom for the first render
+	 */
+	win.GoogleMaps= function(center, zoom, $hook) {
 
 		var self= {};
 
@@ -12,43 +16,53 @@
 		self.loaded= false;
 
 
+		/**
+		 * Initialize the google maps script, create map and mark center
+		 */
 		self.init= function() {
 
-
+			// Create a script
 			var $script= document.createElement('script');
 			$script.setAttribute('async', true);
 			$script.setAttribute('defer', true);
-			$script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAjPs0W0u7uHmMEHhJGwZyhTVlEE_5KKso&callback=initializeMap';
+			$script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAjPs0W0u7uHmMEHhJGwZyhTVlEE_5KKso';
 
-
+			// Onload callback
 			$script.onload= function() {
-
-				self.createMap(zoom);
-				self.addMarker(center);
 
 				var func;
 
+				// Create map
+				self.createMap();
+
+				// mark center
+				// self.addMarker(center);
+
 				setTimeout(function() {
 					
+					// Pop all the load stack elems and execute them
 					while((func= self._onLoadStack.pop())) {
 
 						if(typeof func === 'function')
 							func(self);
 					}
 					
+					// Script is loaded!
 					self.loaded= true;
 				},0);
 			};
 
+			// Append the script to the dom
 			document.body.appendChild($script);
 
 			return self;
 		};
 
 
-		self.createMap= function(zoom) {
-
-			var $hook= document.getElementById('myMap');
+		/**
+		 * Create a new map
+		 */
+		self.createMap= function() {
 
 			self._map= new window.google.maps.Map($hook, {
 				zoom: zoom,
