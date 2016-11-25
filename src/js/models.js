@@ -1,6 +1,14 @@
 
 (function(win, $) {
 
+	function renderTemplate(name, ctx) {
+
+		var template= $('.js-template-' + name).html();
+		var $header= $('.js-' + name);
+
+		win.ResumeBuilder.templateRender($header, template, ctx);
+	}
+
 
 	// User bio
 	win.bio= {
@@ -30,10 +38,7 @@
 
 		display: function() {
 
-			var template= $('.js-template-header').html();
-			var $header= $('.js-header');
-
-			win.ResumeBuilder.templateRender($header, template, this);
+			renderTemplate('header', this);
 		}
 	};
 
@@ -43,41 +48,38 @@
 	win.education= {
 		schools: [
 			{
-				name: 'Hogwarts',
-				location: 'Unknown',
-				degree: 'B.M.',
-				majors: [
-					'Witchcraft',
-					'Wizardry'
-				],
-				dates: '2010-2014',
-				url: 'https://en.wikipedia.org/wiki/Hogwarts'
-			},
-			{
-				name: 'Prof. Xaviers school for gifted youngsters',
-				location: 'North Salem',
+				name: 'Batman',
+				location: 'Gotham',
 				degree: 'Masters',
 				majors: [
-					'Superpowers'
+					'Stealth',
+					'Martial Arts'
+				],
+				dates: '2010-2014',
+				url: 'https://en.wikipedia.org/wiki/Batman'
+			},
+			{
+				name: 'Gotham Academy',
+				location: 'Gotham',
+				degree: 'Bachelors',
+				majors: [
+					'Criminology'
 				],
 				dates: '2015-2017',
-				url: 'https://en.wikipedia.org/wiki/X-Mansion'
+				url: 'http://www.dccomics.com/comics/gotham-academy-2014/gotham-academy-1'
 			}
 		],
 		onlineCourses: [
 			{
 				title: '10 Ways to defeat Joker',
-				school: 'Arkham School for the innocently insane',
+				school: 'Wayne Mansion Courses',
 				dates: '2015',
-				url: 'https://google.com',
+				url: 'https://en.wikipedia.org/wiki/Batman',
 			}	
 		],
 		display: function() {
 
-			var template= $('.js-template-edu').html();
-			var $edu= $('.js-edu');
-
-			win.ResumeBuilder.templateRender($edu, template, this);
+			renderTemplate('edu', this);
 		}
 	};
 
@@ -117,10 +119,7 @@
 		],
 		display: function() {
 
-			var template= $('.js-template-work').html();
-			var $work= $('.js-work');
-
-			win.ResumeBuilder.templateRender($work, template, this);
+			renderTemplate('work', this);
 		}
 	};
 
@@ -145,11 +144,8 @@
 			},
 		],
 		display: function() {
-			
-			var template= $('.js-template-projects').html();
-			var $projects= $('.js-projects');
 
-			win.ResumeBuilder.templateRender($projects, template, this);
+			renderTemplate('projects', this);
 		}
 	};
 
