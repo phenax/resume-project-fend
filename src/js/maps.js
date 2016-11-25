@@ -11,8 +11,14 @@
 
 		var self= {};
 
+		// Stack of all the callbacks to be executed when 
+		// the google maps script is loaded
 		self._onLoadStack= [];
+
+		// All the markers
 		self._markers= [];
+
+		// True if the script is loaded
 		self.loaded= false;
 
 
@@ -73,6 +79,11 @@
 		};
 
 
+		/**
+		 * Add a marker on the map
+		 * 
+		 * @param {Object} position  The coordinates of the location to mark
+		 */
 		self.addMarker= function(position) {
 			
 			self._markers.push(
@@ -85,13 +96,20 @@
 			return self;
 		};
 
+		/**
+		 * Register a callback that will be executed when the script is loaded
+		 * 
+		 * @param  {Function} callback  The callback function
+		 */
 		self.ready= function(callback) {
 
+			// If the script has already been loaded, execute the callback directly
 			if(self.loaded) {
 				callback(self);
-				return;
+				return self;
 			}
 
+			// Else, register it to the onLoad stack
 			self._onLoadStack.push(callback);
 
 			return self;

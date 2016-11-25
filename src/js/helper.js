@@ -1,3 +1,6 @@
+/**
+ * This file is dangerously ugly. Read at your own risk.
+ */
 
 (function(win) {
 
@@ -34,14 +37,15 @@
 	/**
 	 * Rendering templates
 	 * 
-	 * @param  {[type]} content [description]
-	 * @param  {[type]} key     [description]
+	 * @param  {String} content  The content(partially rendered) template
+	 * @param  {String} key      The key name of the list or object to render
 	 */
 	win.ResumeBuilder.objectTemplating= function(content, key) {
 
 		var startStr= TEMPLATE_LIST[0] + key;
 		var endStr= TEMPLATE_LIST[1];
 
+		// Curried
 		return function(callback) {
 
 			var start= content.indexOf(startStr) + (startStr).length;
@@ -50,11 +54,11 @@
 			if(start === (startStr).length - 1)
 				return 'ERROR: Cant render list ' + key;
 
-			var end= 0, nextStart, nextEnd= 0;
+			var end= 0,
+				nextStart,
+				nextEnd= 0;
 
 			var substr= content.slice(start);
-
-			// console.log('-------' + key);
 
 			while(substr) {
 
@@ -85,6 +89,14 @@
 		};
 	};
 
+	/**
+	 * Render template data to a template string and return it.
+	 * 
+	 * @param  {String} template The template string to render
+	 * @param  {Object} data     The date to render
+	 * 
+	 * @return {String}          The template with rendered data
+	 */
 	win.ResumeBuilder.compileTemplate= function(template, data) {
 
 		var content= template;
@@ -151,8 +163,10 @@
 			// For benchmarking
 			console.time('Time to render template');
 			
+			// Render the data in the template
 			var renderedStr= win.ResumeBuilder.compileTemplate(template, data);
 
+			// Append it to the hook
 			$parent.append(renderedStr);
 
 			console.timeEnd('Time to render template');
