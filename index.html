@@ -6,32 +6,101 @@
 
 	<title>John Doe's Resume</title>
 	<link rel="stylesheet" type="text/css" href="./src/css/style.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Raleway:100,400,500" rel="stylesheet" />
 	<script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
 </head>
 <body>
 
+	<!-- All render points -->
 	<header class='header js-header'></header>
+	<main class='container'>
+		<section class='work js-work'></section>
+		<section class='projects js-projects'></section>
+	</main>
 
+
+
+
+	<!--  All templates(in html for seperation of concerns)  -->
 
 	<script type='text/html' class='js-template-header'>
 
 		<div class='header__title'>
-			<div class='header__title__name'>{%name%}</div>
-			<div class='header__title__role'>{%role%}</div>
+			<img class='header__title__image' src='{%biopic%}' />
+			<div class='header__title__wrap'>
+				<div class='header__title__name'>{%name%}</div>
+				<div class='header__title__role'>{%role%}</div>
+			</div>
+			<div class='header__title__msg'>{%welcomeMessage%}</div>
 		</div>
 
-		<div class='header__contacts'>
-			{--skills
-				<h3 class='wow'>{%value%}</h3>
-			--}
+		<div class='header__info'>
+			<div class='header__info__skills-title'>Skills: </div>
+			<ul class='header__info__skills'>
+				{%--skills
+					<li>{%value%}</li>
+				--%}
+			</ul>
+		</div>
 
-			{--contacts
-				<div>{%key%}</div>
-				<h3 class='wow'>{%value%}</h3>
-			--}
+		<div class='header__contacts row'>
+			{%--contacts
+				<div class='header__contacts_card row col'>
+					<div class='contact-name col'>{%key%}:</div>
+					<div class='contact-value col'>{%value%}</div>
+				</div>
+			--%}
 		</div>
 
 	</script>
+
+
+
+	<script type='text/html' class='js-template-work'>
+
+		<div class='work__title'>Work Experience</div>
+
+		<ul class='work__list'>
+			{%--jobs
+				<li class='work__job'>
+					<div class='work__job__title'>
+						<span class='job-title'>{%title%}</span> - 
+						<span class='job-employer'>{%employer%}</span>
+						<span class='job-location'>({%location%})</span>
+					</div>
+
+					<div class='work__job__date'>{%dates%}</div>
+
+					<div class='work__job__descr'>{%description%}</div>
+				</li>
+			--%}
+		</ul>
+
+	</script>
+
+
+
+	<script type='text/html' class='js-template-projects'>
+
+		<ul class='project'>
+
+			{%--projects
+
+				<li class='project__li'>
+					<div>{%title%}</div>
+					<div>{%dates%}</div>
+					<div>{%description%}</div>
+
+					{%--images
+						<div>{%value%}</div>
+					--%}
+				</li>
+			--%}
+
+		</ul>
+
+	</script>
+
 
 	<!-- <script async defer src="http://maps.googleapis.com/maps/api/js?libraries=places&key=YOUR_API_KEY_HERE"></script> -->
 	<script async defer src='./src/js/models.js'></script>

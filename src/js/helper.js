@@ -2,7 +2,7 @@
 (function(win) {
 
 	var TEMPLATE_KEY= [ '{%', '%}' ];
-	var TEMPLATE_LIST= [ '{--', '--}' ];
+	var TEMPLATE_LIST= [ '{%--', '--%}' ];
 
 	win.ResumeBuilder= function(models) {
 
@@ -21,18 +21,48 @@
 
 	var objectTemplating= function(content, key) {
 
+		var startStr= TEMPLATE_LIST[0] + key;
+		var endStr= TEMPLATE_LIST[1];
+
 		return function(callback) {
 
-			var startStr= TEMPLATE_LIST[0] + key;
-			var endStr= TEMPLATE_LIST[1];
-
 			var start= content.indexOf(startStr) + (startStr).length;
-			var end= start + content.substring(start).indexOf(endStr);
 
-			var shortTemplate= content.slice(start, end);
+			// If there is no start point, exit out
+			if(start === (startStr).length - 1)
+				return '';
 
-			content=
-				content
+			var end= 0, nextStart, nextEnd= 0;
+
+			console.log('------------' + key);
+
+			var substr= content.slice(start);
+
+			while(substr) {
+
+				end= substr.slice(nextEnd).indexOf(endStr);
+
+				if(end === -1)
+					return '';
+
+				nextStart= substr.slice(nextEnd).indexOf(TEMPLATE_LIST[0]);
+
+				if(nextStart === -1)
+					break;
+
+				if(end < nextStart)
+					break;
+
+				nextEnd= end + TEMPLATE_LIST[1].length;
+			}
+
+			end= nextEnd + substr.slice(nextEnd).indexOf(endStr);
+
+			var shortTemplate= substr.slice(0, end);
+
+			console.log(shortTemplate);
+
+			return content
 					.split(startStr + shortTemplate + endStr)
 					.join(callback(shortTemplate));
 		};
@@ -50,10 +80,10 @@
 
 				var templating= objectTemplating(content, key);
 
-				// If the value of the model is an array
-				if(value.map) {
+				// If the value is an array
+				if(value.constructor === Array) {
 
-					templating(function(template) {
+					content= templating(function(template) {
 
 						return value.map(function(val) {
 
@@ -65,9 +95,10 @@
 						}).join('');
 					});
 
-				} else if(typeof value === 'object' && value.constructor === Object) {
+				// If the value is an object literal
+				} else if(value.constructor === Object) {
 
-					templating(function(template) {
+					content= templating(function(template) {
 
 						var content= '';
 
@@ -81,6 +112,7 @@
 						return content;
 					});
 
+				// For all other data types of value
 				} else {
 
 					content= 
