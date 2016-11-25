@@ -296,3 +296,9 @@ section {
 	font-size: 1.2em;
 	text-transform: none;
 }
+
+
+
+.myMap {
+	height: 500px;
+}

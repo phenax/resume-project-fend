@@ -4,19 +4,30 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<title>John Doe's Resume</title>
+	<title>Richard Grayson's Resume</title>
+
 	<link rel="stylesheet" type="text/css" href="./src/css/style.css"/>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,400,500" rel="stylesheet" />
-	<script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script async defer src="./src/js/models.js"></script>
+	<script async defer src="./src/js/helper.js"></script>
+	<script async defer src="./src/js/maps.js"></script>
+	<script async defer src="./src/js/script.js"></script>
 </head>
 <body>
 
 	<!-- All render points -->
-	<header class='header js-header'></header>
-	<main class='container'>
-		<section class='work js-work'></section>
-		<section class='projects js-projects'></section>
-		<section class='edu work js-edu'></section>
+	<header class="header js-header"></header>
+	<main class="container">
+		<section class="work js-work"></section>
+		<section class="projects js-projects"></section>
+		<section class="edu work js-edu"></section>
+
+		<section class="contact">
+			<div class="resume-title">Where I've lived and worked</div>
+			<div id="myMap" class='myMap'></div>
+		</section>
 	</main>
 
 
@@ -25,31 +36,31 @@
 	<!--  All templates(in html for seperation of concerns)  -->
 
 	<!-- Header template -->
-	<script type='text/html' class='js-template-header'>
+	<script type="text/html" class="js-template-header">
 
-		<div class='header__title'>
-			<img class='header__title__image' src='{%biopic%}' />
-			<div class='header__title__wrap'>
-				<div class='header__title__name'>{%name%}</div>
-				<div class='header__title__role'>{%role%}</div>
+		<div class="header__title">
+			<img class="header__title__image" src="{%biopic%}" />
+			<div class="header__title__wrap">
+				<div class="header__title__name">{%name%}</div>
+				<div class="header__title__role">{%role%}</div>
 			</div>
-			<div class='header__title__msg'>{%welcomeMessage%}</div>
+			<div class="header__title__msg">{%welcomeMessage%}</div>
 		</div>
 
-		<div class='header__info'>
-			<div class='header__info__skills-title'>Skills: </div>
-			<ul class='header__info__skills'>
+		<div class="header__info">
+			<div class="header__info__skills-title">Skills: </div>
+			<ul class="header__info__skills">
 				{%--skills
 					<li>{%__value__%}</li>
 				--%}
 			</ul>
 		</div>
 
-		<div class='header__contacts row'>
+		<div class="header__contacts row">
 			{%--contacts
-				<div class='header__contacts_card row col'>
-					<div class='contact-name col'>{%__key__%}:</div>
-					<div class='contact-value col'>{%__value__%}</div>
+				<div class="header__contacts_card row col">
+					<div class="contact-name col">{%__key__%}:</div>
+					<div class="contact-value col">{%__value__%}</div>
 				</div>
 			--%}
 		</div>
@@ -58,22 +69,22 @@
 
 
 	<!-- Work template -->
-	<script type='text/html' class='js-template-work'>
+	<script type="text/html" class="js-template-work">
 
-		<div class='resume-title'>Work Experience</div>
+		<div class="resume-title">Work Experience</div>
 
-		<ul class='work__list'>
+		<ul class="work__list">
 			{%--jobs
-				<li class='work__job'>
-					<div class='work__job__title'>
-						<span class='job-title'>{%title%}</span> - 
-						<span class='job-employer'>{%employer%}</span>
-						<span class='job-location'>({%location%})</span>
+				<li class="work__job">
+					<div class="work__job__title">
+						<span class="job-title">{%title%}</span> - 
+						<span class="job-employer">{%employer%}</span>
+						<span class="job-location">({%location%})</span>
 					</div>
 
-					<div class='work__job__date'>{%dates%}</div>
+					<div class="work__job__date">{%dates%}</div>
 
-					<div class='work__job__descr'>{%description%}</div>
+					<div class="work__job__descr">{%description%}</div>
 				</li>
 			--%}
 		</ul>
@@ -82,22 +93,22 @@
 
 
 	<!-- Projects template -->
-	<script type='text/html' class='js-template-projects'>
+	<script type="text/html" class="js-template-projects">
 
-		<div class='resume-title'>Projects</div>
+		<div class="resume-title">Projects</div>
 
-		<ul class='project'>
+		<ul class="project">
 			{%--projects
 
-				<li class='project__li'>
-					<div class='project__title'>{%title%}</div>
-					<div class='project__date'>{%dates%}</div>
+				<li class="project__li">
+					<div class="project__title">{%title%}</div>
+					<div class="project__date">{%dates%}</div>
 
-					<div class='project__descr'>{%description%}</div>
+					<div class="project__descr">{%description%}</div>
 
-					<div class='project__imgs'>
+					<div class="project__imgs">
 						{%--images
-							<img src='{%__value__%}' />
+							<img src="{%__value__%}" />
 						--%}
 					</div>
 				</li>
@@ -109,53 +120,47 @@
 
 
 	<!-- Education template -->
-	<script type='text/html' class='js-template-edu'>
+	<script type="text/html" class="js-template-edu">
 
-		<div class='resume-title'>Education</div>
+		<div class="resume-title">Education</div>
 
-		<ul class='work__list'>
+		<ul class="work__list">
 			{%--schools
 
-				<li class='work__job'>
+				<li class="work__job">
 					
-					<div class='work__job__title'>
-						<span class='job-title'>{%name%}</span> - 
-						<span class='job-employer'>{%degree%}</span>
-						<span class='job-location'>({%location%})</span>
+					<div class="work__job__title">
+						<span class="job-title">{%name%}</span> - 
+						<span class="job-employer">{%degree%}</span>
+						<span class="job-location">({%location%})</span>
 					</div>
 
-					<div class='work__job__date'>{%dates%}</div>
+					<div class="work__job__date">{%dates%}</div>
 
-					<div class='work__job__descr'>
-						<span class='contact-name'>Majors: </span>
+					<div class="work__job__descr">
+						<span class="contact-name">Majors: </span>
 						{%--majors
-							<span class='majors'>{%__value__%}</span>
+							<span class="majors">{%__value__%}</span>
 						--%}
 					</div>
 				</li>
 			--%}
 		</ul>
 
-		<div class='online-title'>Online Courses</div>
+		<div class="online-title">Online Courses</div>
 
-		<ul class='online'>
+		<ul class="online">
 			{%--onlineCourses
 
-				<li class='online__course project__li'>
+				<li class="online__course project__li">
 					
-					<div class='online__course__name project__title'>{%title%} - {%school%}</div>
-					<div class='online__course__dates project__date'>{%dates%}</div>
-					<div class='online__course__url project__descr'>{%url%}</div>
+					<div class="online__course__name project__title">{%title%} - {%school%}</div>
+					<div class="online__course__dates project__date">{%dates%}</div>
+					<div class="online__course__url project__descr">{%url%}</div>
 				</li>
 			--%}
 		</ul>
 
 	</script>
-
-
-	<!-- <script async defer src="http://maps.googleapis.com/maps/api/js?libraries=places&key=YOUR_API_KEY_HERE"></script> -->
-	<script async defer src='./src/js/models.js'></script>
-	<script async defer src='./src/js/helper.js'></script>
-	<script async defer src='./src/js/script.js'></script>
 </body>
 </html>

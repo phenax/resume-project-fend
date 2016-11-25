@@ -1,11 +1,9 @@
 
 (function(win, $) {
 
-	win.models= {};
-
 
 	// User bio
-	win.models.bio= {
+	win.bio= {
 
 		name: 'Richard Grayson',
 
@@ -42,7 +40,7 @@
 
 
 	// Education
-	win.models.education= {
+	win.education= {
 		schools: [
 			{
 				name: 'Hogwarts',
@@ -86,7 +84,7 @@
 
 
 	// Work model
-	win.models.work= {
+	win.work= {
 		jobs: [
 			{
 				employer: 'Justice League Of Arkham', 
@@ -131,7 +129,7 @@
 
 
 	// Projects model
-	win.models.projects= {
+	win.projects= {
 		projects: [
 			{
 				title: 'Became Nightwing',
