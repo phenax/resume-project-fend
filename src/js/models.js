@@ -1,13 +1,21 @@
 
 (function(win, $) {
 
-	function renderTemplate(name, ctx) {
+
+	/**
+	 * Render a template with the models context
+	 * 
+	 * @param  {String} name     The name of the section to render
+	 * @param  {Object} context  The object itself
+	 */
+	function renderTemplate(name, context) {
 
 		var template= $('.js-template-' + name).html();
 		var $header= $('.js-' + name);
 
-		win.ResumeBuilder.templateRender($header, template, ctx);
+		win.ResumeBuilder.templateRender($header, template, context);
 	}
+
 
 
 	// User bio
