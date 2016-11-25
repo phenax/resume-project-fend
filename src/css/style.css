@@ -108,6 +108,19 @@ a {
 	flex: 1;
 }
 
+section {
+	padding-bottom: 2em;
+}
+
+.resume-title {
+	font-size: 1.6em;
+	padding: 1em;
+	border-bottom: 1px solid #ccc;
+}
+
+
+
+
 
 .header {
 	background-color: #222;
@@ -193,19 +206,10 @@ a {
 }
 
 
-section {
-	padding-bottom: 2em;
-}
 
 
 .work {
 	padding: 2em;
-}
-
-.work__title {
-	font-size: 1.6em;
-	padding: 1em 0;
-	border-bottom: 1px solid #ccc;
 }
 
 .work__list {
@@ -237,4 +241,58 @@ section {
 .work__job__descr {
 	line-height: 1.3em;
 	padding: .5em 1em;
+}
+
+
+
+.project {
+	padding: 2em 1em;
+}
+
+.project__li {
+	padding: 1em .5em;
+}
+
+.project__title {
+	font-size: 1.4em;
+	color: #3498db;
+	padding: .5em 0;
+	text-transform: uppercase;
+}
+
+.project__date {
+	color: #888;
+	padding: .1em;
+}
+
+.project__descr {
+	padding: 1em;
+}
+
+.project__imgs {
+	padding: .2em;
+}
+
+.project__imgs img {
+	height: 200px;
+}
+
+
+.edu > .majors:not(:last-child)::after {
+	content: ', ';
+}
+
+.online-title {
+	font-size: 1.3em;
+	font-weight: bold;
+	padding: .5em 1em;
+}
+
+.online {
+	font-size: .9em;
+}
+
+.online__course__name {
+	font-size: 1.2em;
+	text-transform: none;
 }

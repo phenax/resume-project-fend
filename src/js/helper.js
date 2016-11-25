@@ -1,13 +1,24 @@
 
 (function(win) {
 
+	// For templating simple key value pairs
 	var TEMPLATE_KEY= [ '{%', '%}' ];
+
+	// For templating lists
 	var TEMPLATE_LIST= [ '{%--', '--%}' ];
 
+	/**
+	 * A helper function to render all the templates
+	 * 
+	 * @param {List} models   A list of all models to render
+	 */
 	win.ResumeBuilder= function(models) {
 
 		var self= {};
 
+		/**
+		 * Starts rendering all templates
+		 */
 		self.render= function() {
 
 			models.forEach(function(model) {
@@ -19,7 +30,14 @@
 		return self;
 	};
 
-	var objectTemplating= function(content, key) {
+
+	/**
+	 * Rendering templates
+	 * 
+	 * @param  {[type]} content [description]
+	 * @param  {[type]} key     [description]
+	 */
+	win.ResumeBuilder.objectTemplating= function(content, key) {
 
 		var startStr= TEMPLATE_LIST[0] + key;
 		var endStr= TEMPLATE_LIST[1];
@@ -30,13 +48,13 @@
 
 			// If there is no start point, exit out
 			if(start === (startStr).length - 1)
-				return '';
+				return 'ERROR: Cant render list ' + key;
 
 			var end= 0, nextStart, nextEnd= 0;
 
-			console.log('------------' + key);
-
 			var substr= content.slice(start);
+
+			// console.log('-------' + key);
 
 			while(substr) {
 
@@ -59,12 +77,11 @@
 			end= nextEnd + substr.slice(nextEnd).indexOf(endStr);
 
 			var shortTemplate= substr.slice(0, end);
-
-			console.log(shortTemplate);
+			var shortTemplateWithData= callback(shortTemplate);
 
 			return content
 					.split(startStr + shortTemplate + endStr)
-					.join(callback(shortTemplate));
+					.join(shortTemplateWithData);
 		};
 	};
 
@@ -78,7 +95,7 @@
 
 				var value= data[key];
 
-				var templating= objectTemplating(content, key);
+				var templating= win.ResumeBuilder.objectTemplating(content, key);
 
 				// If the value is an array
 				if(value.constructor === Array) {
@@ -89,7 +106,7 @@
 
 							return win.ResumeBuilder.compileTemplate(
 								template, 
-								(typeof val === 'string')? {value: val}: val
+								(typeof val === 'string')? {'__value__': val}: val
 							);
 
 						}).join('');
@@ -105,7 +122,7 @@
 						for(var i in value) {
 							content+= win.ResumeBuilder.compileTemplate(
 								template, 
-								{ key: i, value: value[i] }
+								{ '__key__': i, '__value__': value[i] }
 							);
 						}
 
@@ -128,9 +145,19 @@
 
 	win.ResumeBuilder.templateRender= function($parent, template, data) {
 
-		var renderedStr= win.ResumeBuilder.compileTemplate(template, data);
+		// Async
+		setTimeout(function() {
 
-		$parent.append(renderedStr);
+			// For benchmarking
+			console.time('Time to render template');
+			
+			var renderedStr= win.ResumeBuilder.compileTemplate(template, data);
+
+			$parent.append(renderedStr);
+
+			console.timeEnd('Time to render template');
+		}, 0);
+
 	};
 
 })(window);

@@ -16,6 +16,7 @@
 	<main class='container'>
 		<section class='work js-work'></section>
 		<section class='projects js-projects'></section>
+		<section class='edu work js-edu'></section>
 	</main>
 
 
@@ -23,6 +24,7 @@
 
 	<!--  All templates(in html for seperation of concerns)  -->
 
+	<!-- Header template -->
 	<script type='text/html' class='js-template-header'>
 
 		<div class='header__title'>
@@ -38,7 +40,7 @@
 			<div class='header__info__skills-title'>Skills: </div>
 			<ul class='header__info__skills'>
 				{%--skills
-					<li>{%value%}</li>
+					<li>{%__value__%}</li>
 				--%}
 			</ul>
 		</div>
@@ -46,8 +48,8 @@
 		<div class='header__contacts row'>
 			{%--contacts
 				<div class='header__contacts_card row col'>
-					<div class='contact-name col'>{%key%}:</div>
-					<div class='contact-value col'>{%value%}</div>
+					<div class='contact-name col'>{%__key__%}:</div>
+					<div class='contact-value col'>{%__value__%}</div>
 				</div>
 			--%}
 		</div>
@@ -55,10 +57,10 @@
 	</script>
 
 
-
+	<!-- Work template -->
 	<script type='text/html' class='js-template-work'>
 
-		<div class='work__title'>Work Experience</div>
+		<div class='resume-title'>Work Experience</div>
 
 		<ul class='work__list'>
 			{%--jobs
@@ -79,24 +81,73 @@
 	</script>
 
 
-
+	<!-- Projects template -->
 	<script type='text/html' class='js-template-projects'>
 
-		<ul class='project'>
+		<div class='resume-title'>Projects</div>
 
+		<ul class='project'>
 			{%--projects
 
 				<li class='project__li'>
-					<div>{%title%}</div>
-					<div>{%dates%}</div>
-					<div>{%description%}</div>
+					<div class='project__title'>{%title%}</div>
+					<div class='project__date'>{%dates%}</div>
 
-					{%--images
-						<div>{%value%}</div>
-					--%}
+					<div class='project__descr'>{%description%}</div>
+
+					<div class='project__imgs'>
+						{%--images
+							<img src='{%__value__%}' />
+						--%}
+					</div>
 				</li>
 			--%}
+		</ul>
 
+	</script>
+
+
+
+	<!-- Education template -->
+	<script type='text/html' class='js-template-edu'>
+
+		<div class='resume-title'>Education</div>
+
+		<ul class='work__list'>
+			{%--schools
+
+				<li class='work__job'>
+					
+					<div class='work__job__title'>
+						<span class='job-title'>{%name%}</span> - 
+						<span class='job-employer'>{%degree%}</span>
+						<span class='job-location'>({%location%})</span>
+					</div>
+
+					<div class='work__job__date'>{%dates%}</div>
+
+					<div class='work__job__descr'>
+						<span class='contact-name'>Majors: </span>
+						{%--majors
+							<span class='majors'>{%__value__%}</span>
+						--%}
+					</div>
+				</li>
+			--%}
+		</ul>
+
+		<div class='online-title'>Online Courses</div>
+
+		<ul class='online'>
+			{%--onlineCourses
+
+				<li class='online__course project__li'>
+					
+					<div class='online__course__name project__title'>{%title%} - {%school%}</div>
+					<div class='online__course__dates project__date'>{%dates%}</div>
+					<div class='online__course__url project__descr'>{%url%}</div>
+				</li>
+			--%}
 		</ul>
 
 	</script>

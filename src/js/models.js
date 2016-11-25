@@ -1,7 +1,11 @@
 
 (function(win, $) {
 
-	win.bio= {
+	win.models= {};
+
+
+	// User bio
+	win.models.bio= {
 
 		name: 'Richard Grayson',
 
@@ -35,7 +39,10 @@
 		}
 	};
 
-	win.education= {
+
+
+	// Education
+	win.models.education= {
 		schools: [
 			{
 				name: 'Hogwarts',
@@ -62,17 +69,24 @@
 		onlineCourses: [
 			{
 				title: '10 Ways to defeat Joker',
-				school: 'Wayne Mansion Home-Schooling',
+				school: 'Arkham School for the innocently insane',
 				dates: '2015',
 				url: 'https://google.com',
 			}	
 		],
 		display: function() {
-			// render here
+
+			var template= $('.js-template-edu').html();
+			var $edu= $('.js-edu');
+
+			win.ResumeBuilder.templateRender($edu, template, this);
 		}
 	};
 
-	win.work= {
+
+
+	// Work model
+	win.models.work= {
 		jobs: [
 			{
 				employer: 'Justice League Of Arkham', 
@@ -112,19 +126,24 @@
 		}
 	};
 
-	win.projects= {
+
+
+
+
+	// Projects model
+	win.models.projects= {
 		projects: [
 			{
 				title: 'Became Nightwing',
 				dates: 'February 2009',
 				description: 'Finally after years of working under Batman, I became independent. He was being a total asshat about me being inexperienced but I made it through and became my own man.',
-				images: ['http://bamsmackpow.com/files/2016/08/Nightwing.jpg']
+				images: ['http://bamsmackpow.com/files/2016/08/Nightwing.jpg', 'https://i.kinja-img.com/gawker-media/image/upload/s--owXZ44Oq--/c_fit,fl_progressive,q_80,w_636/1969k3mus3toejpg.jpg']
 			},
 			{
 				title: 'Saved Gotham from Riddler',
 				dates: 'March 2008',
 				description: 'Riddler had excaped Arkham Asylum. I, under the supervision of Batman, captured him. Details are confidential.',
-				images: ['https://s-media-cache-ak0.pinimg.com/236x/46/c1/54/46c15460f4fc00ff21bfce079a8e1429.jpg']
+				images: ['https://s-media-cache-ak0.pinimg.com/236x/46/c1/54/46c15460f4fc00ff21bfce079a8e1429.jpg', 'http://cdn.movieweb.com/video.img/VImTAMs5rTiUqr_2_b.jpg']
 			},
 		],
 		display: function() {
