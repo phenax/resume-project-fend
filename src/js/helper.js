@@ -108,73 +108,74 @@
 				var value= data[key];
 
 				var templating= win.ResumeBuilder.objectTemplating(content, key);
-// If the value is an array
-if (value.constructor === Array) {
 
-    content = templating(function(template) {
+				// If the value is an array
+				if (value.constructor === Array) {
 
-        return value.map(function(val) {
+					content = templating(function(template) {
 
-            return win.ResumeBuilder.compileTemplate(
-                template,
-                (typeof val === 'string') ? {
-                    '__value__': val
-                } : val
-            );
+						return value.map(function(val) {
 
-        }).join('');
-    });
+							return win.ResumeBuilder.compileTemplate(
+								template,
+								(typeof val === 'string') ? {
+									'__value__': val
+								} : val
+							);
 
-    // If the value is an object literal
-} else if (value.constructor === Object) {
+						}).join('');
+					});
 
-    content = templating(function(template) {
+					// If the value is an object literal
+				} else if (value.constructor === Object) {
 
-        var content = '';
+					content = templating(function(template) {
 
-        for (var i in value) {
-            content += win.ResumeBuilder.compileTemplate(
-                template, {
-                    '__key__': i,
-                    '__value__': value[i]
-                }
-            );
-        }
+						var content = '';
 
-        return content;
-    });
+						for (var i in value) {
+							content += win.ResumeBuilder.compileTemplate(
+								template, {
+									'__key__': i,
+									'__value__': value[i]
+								}
+							);
+						}
 
-    // For all other data types of value
-} else {
+						return content;
+					});
 
-    content =
-        content
-        .split(TEMPLATE_KEY[0] + key + TEMPLATE_KEY[1])
-        .join(value);
-}
-}
-}
+					// For all other data types of value
+				} else {
 
-return content;
-};
+					content =
+						content
+						.split(TEMPLATE_KEY[0] + key + TEMPLATE_KEY[1])
+						.join(value);
+				}
+			}
+		}
 
-win.ResumeBuilder.templateRender = function($parent, template, data) {
+		return content;
+	};
 
-// Async
-setTimeout(function() {
+	win.ResumeBuilder.templateRender = function($parent, template, data) {
 
-    // For benchmarking
-    console.time('Time to render template');
+		// Async
+		setTimeout(function() {
 
-    // Render the data in the template
-    var renderedStr = win.ResumeBuilder.compileTemplate(template, data);
+			// For benchmarking
+			console.time('Time to render template');
 
-    // Append it to the hook
-    $parent.append(renderedStr);
+			// Render the data in the template
+			var renderedStr = win.ResumeBuilder.compileTemplate(template, data);
 
-    console.timeEnd('Time to render template');
-}, 0);
+			// Append it to the hook
+			$parent.append(renderedStr);
 
-};
+			console.timeEnd('Time to render template');
+		}, 0);
+
+	};
 
 })(window);
